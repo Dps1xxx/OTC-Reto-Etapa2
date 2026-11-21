@@ -5,6 +5,7 @@
 
 | Archivo | Contenido |
 | --- | --- |
+| [diegoOT_Avance_Reto_Etapa3_Diego_Perez.pdf](diegoOT_Avance_Reto_Etapa3_Diego_Perez.pdf) ([Word](diegoOT_Avance_Reto_Etapa3_Diego_Perez.docx)) | Documento del avance (parte B): inconsistencias, métodos de corrección, fórmulas de los atributos nuevos e indicadores, metadata de las tablas acondicionadas, evidencias y avance del prototipo. |
 | [diegoOT_Etapa3_Acondicionamiento.ipynb](diegoOT_Etapa3_Acondicionamiento.ipynb) | Notebook en Python (ejecutado): recuerda las inconsistencias de la Etapa 2, aplica los métodos de corrección M01 a M11, calcula los atributos nuevos, genera la bitácora de correcciones, las validaciones, la metadata y las gráficas. |
 | [diegoOT_atributos.sql](diegoOT_atributos.sql) | Fórmulas de los atributos nuevos e indicadores escritas en SQL (SQLite) sobre las tablas acondicionadas. |
 | [diegoOT_ejecutar_sql.py](diegoOT_ejecutar_sql.py) | Carga las tablas acondicionadas en SQLite, ejecuta el SQL y comprueba que cada atributo da lo mismo que en el notebook. Resultado en [salida/evidencia_sql.txt](salida/evidencia_sql.txt). |
