@@ -1,0 +1,32 @@
+Comprobación Python (notebook) vs SQL
+------------------------------------------------------------------------
+OK    v_colaboradores_atributos    estatus_corte            107/107 filas iguales
+OK    v_colaboradores_atributos    antiguedad_anios         107/107 filas iguales
+OK    v_colaboradores_atributos    costo_mensual            107/107 filas iguales
+OK    v_colaboradores_atributos    costo_hora               107/107 filas iguales
+OK    v_colaboradores_atributos    docs_basicos_ok          107/107 filas iguales
+OK    v_colaboradores_atributos    en_banca                 107/107 filas iguales
+OK    v_asignaciones_atributos     fecha_fin_efectiva       31/31 filas iguales
+OK    v_asignaciones_atributos     dias_para_fin            31/31 filas iguales
+OK    v_asignaciones_atributos     estado_vigencia          31/31 filas iguales
+OK    v_asignaciones_atributos     pct_dedicacion           31/31 filas iguales
+OK    v_asignaciones_atributos     costo_mensual_asignado   31/31 filas iguales
+OK    v_activos_atributos          equipo_por_recuperar     123/123 filas iguales
+OK    v_activos_atributos          valor_por_recuperar      123/123 filas iguales
+------------------------------------------------------------------------
+Todas las fórmulas SQL coinciden con el notebook.
+
+Indicadores calculados en SQL
+pregunta                                                    indicador            valor
+      P1                                             Activos al corte               75
+      P1       Tasa de utilización (activos con asignación / activos) 30 de 75 (40.0%)
+      P2                               Asignaciones vencidas al corte                3
+      P3                              Proyectos En Curso sin personal           4 de 7
+      P4                 Costo por hora promedio (activos con sueldo)           $349.9
+      P5                       Costo mensual de la plantilla asignada       $1,924,711
+      P6                                    Costo mensual de la banca       $1,994,154
+      P6                      Peso de la banca sobre la nómina activa            50.9%
+      P7 Habilidades con menos de 2 activos en nivel Avanzado/Experto               11
+      P9                                  Bajas con fecha / sin fecha          14 / 18
+     P10                       Expedientes básicos completos (7 de 7)         41 de 75
+     P11                       Equipos por recuperar / valor conocido      9 / $40,693

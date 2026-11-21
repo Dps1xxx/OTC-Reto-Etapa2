@@ -1,0 +1,38 @@
+﻿id,metodo,regla,tabla,campo,hallazgo_etapa2,problema,accion,afectados_antes,pendientes_despues
+C01,M01,R11,Colaboradores,"Nombre Completo, Tipo Nómina, Departamento, Puesto, Ciudad, SGMM",,Espacios sobrantes y mezcla de mayúsculas/minúsculas,TRIM + colapso de espacios + MAYÚSCULAS,105,0
+C02,M02,R11,Colaboradores,Puesto,E02,Puesto = PENDIENTE en activos,PENDIENTE -> nulo + bandera puesto_faltante,29,27
+C03,M04,R01,Colaboradores,Puesto,E02,Puesto vacío recuperable en otra fuente,Cruce por ID con Asignaciones (Rol Asignado),2,0
+C04,M04,R01,Colaboradores,Departamento,E03,Departamento vacío,Derivado del puesto con el catálogo de roles (0 conflictos con los 12 valores originales),95,48
+C05,M03,R11,Colaboradores,Tipo Nómina,E05,Claves solapadas de la familia SMR,Tabla de equivalencias -> esquema_nomina (se conserva el valor original),9,8
+C06,M03,R11,Colaboradores,Ciudad,E13,"Ciudad sin estandarizar (MTY/Monterrey, Jalisco/Guadalajara, país, texto libre)",Catálogo ubicación-estado-país,25,23
+C07,M03,R11,Colaboradores,SGMM,E12,"Valores mezclados (PLAN SEGURO/PLAN SEGUROS, SI/NO, PENDIENTE...)",Se separa aseguradora y estatus de cobertura,10,3
+C08,M06,R02,Colaboradores,Estatus / Fecha de Baja,E07,Activo con baja futura sin marcar,estatus_corte y bandera baja_programada,1,0
+C09,M11,R02,Colaboradores,Fecha de Baja,E06,Baja sin fecha de baja,No se imputa; bandera baja_sin_fecha y antigüedad nula,18,18
+C10,M02,R03,Colaboradores,Sueldo Total Integrado,E08,Activos con sueldo = 0,Se trata como dato faltante (costo_mensual nulo + bandera sueldo_faltante),5,5
+C11,M06,R03,Colaboradores,Sueldo Total Integrado,E09,Bajas que conservan sueldo > 0,costo_mensual vigente = 0; el sueldo original queda como histórico,12,0
+C12,M01,R11,Clientes,"Cliente, Industria, Proyecto, PM OTC, Estatus",E46,"Espacios sobrantes (""Grupo Daltile "", ""Manufactura "") y mayúsculas mezcladas",TRIM + MAYÚSCULAS,60,0
+C13,M03,R11,Clientes y Asignaciones,"Proyecto, Cliente",E46,"Errores de captura (""Manufacta"", ""Asiganci´ñon"", ""Mèxico"")",Tabla de correcciones aplicada en ambas tablas,3,0
+C14,M01,R11,Asignaciones,"Nombre, Roles, Cliente, Proyecto, Tipo, Estatus",E46,Espacios sobrantes y mayúsculas mezcladas,TRIM + MAYÚSCULAS,132,0
+C15,M02,R07,Asignaciones,Fecha Inicio,E34,Fecha de relleno 1990-01-01,Se convierte en nulo + bandera fecha_inicio_desconocida,21,21
+C16,M02,R07,Asignaciones,Fecha Fin,E35,"Texto ""Indefinido"" en un campo de fecha",Se convierte en nulo + bandera fin_indefinido,24,24
+C17,M05,R08,Asignaciones,Fecha Inicio / Fecha Fin,E40,Fechas de la asignación fuera del rango del proyecto (Marazzi),Se recorta al rango del catálogo de Clientes; se conserva la fecha registrada,3,0
+C18,M05,R08,Asignaciones,Fecha Fin,E40,"Fecha fin ""Indefinido"" aunque el proyecto tiene fecha fin",Se completa con la fecha fin del proyecto,1,0
+C19,M04,R01,Asignaciones,Rol Asignado / Rol interno,E36,Roles = PENDIENTE,rol_efectivo = primer valor disponible (asignado > interno > puesto del catálogo); sin dato queda nulo + bandera,29,29
+C20,M04,R01,Asignaciones,rol_efectivo,E37,Asignaciones sin ningún rol conocido,Se deja nulo y se marca rol_faltante (no se imputa),14,12
+C21,M07,R06,Asignaciones,pct_dedicacion,E39,No existe % de dedicación,Reparto en partes iguales entre las asignaciones En Curso de la persona,2,0
+C22,M01,R11,Activos,"Marca, Modelo, Descripción, Tipo, Serie, Colaborador",E48,Espacios sobrantes y mayúsculas mezcladas,TRIM + MAYÚSCULAS,369,0
+C23,M03,R11,Activos,Marca,E48,Misma marca escrita de varias formas,Normalización de texto (12 variantes -> 5 marcas),12,5
+C24,M02,R03,Activos,Costo,E49,Costo = 0,Se trata como desconocido (nulo + bandera costo_desconocido); la inversión se reporta sólo sobre costo conocido,70,70
+C25,M02,R07,Activos,Fecha Inicio,E50,Fecha 1990-01-01 o vacía,Nulo + bandera inicio_desconocido,67,67
+C26,M02,R07,Activos,Fecha Fin,E51,"Texto ""Activo"" en un campo de fecha",Nulo + bandera equipo_vigente,81,0
+C27,M08,R09,Activos,Colaborador Asignado,E52,"Responsable ligado por nombre y marcador ""Sin Asignar""","Liga por ID de colaborador; ""Sin Asignar"" -> nulo + bandera sin_responsable",32,0
+C28,M11,R09,Activos,situacion_equipo,E52,Equipos a nombre de bajas sin distinguir si ya se devolvieron,Se separa POR RECUPERAR (vigente) de DEVUELTO / CERRADO (con fecha fin),17,9
+C29,M09,R01,Inversion_Activos_OTC,todas,E48,Tabla duplicada de Catalogo_Activos,Conciliación por Cód Activo (123/123 iguales) y se descarta como fuente,123,0
+C30,M11,R02,Matriz_Habilidades,71 columnas de habilidad,E57,Formato ancho con 60% de celdas vacías,Formato largo con sólo las celdas evaluadas; vacío = NO EVALUADO (no se imputa nivel),2305,0
+C31,M06,R02,Matriz_Habilidades,cobertura por habilidad,E59,Filas de bajas inflan la cobertura de habilidades,La cobertura se calcula sólo con colaboradores activos,39,0
+C32,M09,R01,Sueldos_Salarios_OTC,todas,E32,Tabla duplicada de los activos en Colaboradores,Conciliación por ID (75/75 iguales) y se descarta como fuente,75,0
+C33,M11,R08,Clientes,Estatus Proyecto,E41,Proyectos En Curso con fecha fin vencida,Bandera vencido (no se cambia el estatus; lo decide OTC),2,2
+C34,M11,R08,Clientes,Estatus Proyecto,E38,Proyecto Por Iniciar con personal asignado En Curso,Bandera estatus_inconsistente,1,1
+C35,M10,R12,Departamentos,"responsable, centroCostos",E56,Columnas 100% vacías,Se eliminan de la tabla acondicionada (quedan como dato por capturar),6,0
+C36,M10,R12,Colaboradores,"RFC, CURP, NSS, Teléfono, Correo, Domicilio, Notas",E15-E21,Datos enmascarados con un solo valor / columna vacía,Se excluyen de la tabla acondicionada; la llave es el ID,7,0
+C37,M10,R12,Colaboradores,"Género, Fecha Nacimiento, Beneficiario, Parentesco, Alergias/Condiciones","E10, E11, E14",Datos personales sin uso en P1–P11,Minimización: no pasan a la tabla acondicionada,5,0

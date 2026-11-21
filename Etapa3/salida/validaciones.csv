@@ -1,0 +1,26 @@
+﻿id,validacion,resultado,detalle,critica
+V01,Departamento del catálogo coincide con el derivado del rol,OK,0 conflictos,True
+V02,Todas las ciudades tienen equivalencia,OK,[],True
+V03,Neto Total = IMSS + Asimilados + Complementos,OK,0 filas no cuadran,True
+V04,Total Integrado = Neto Total + Comisión + Impuestos IMSS,OK,0 filas no cuadran,True
+V05,id_proyecto único,OK,,True
+V06,Cada PM de OTC existe como colaborador (R05),FALLA,"6 PM no se encuentran por nombre en el catálogo (R05 no se cumple; hallazgo, no corrección)",False
+V07,Toda asignación encuentra su proyecto en el catálogo,OK,0 sin proyecto,True
+V08,Fecha inicio efectiva <= fecha fin efectiva,OK,,True
+V09,Nombre en Asignaciones coincide con el nombre del ID,OK,,True
+V10,Dedicación total por persona <= 100% (R04),OK,,True
+V11,Cada equipo con responsable encuentra su ID,OK,0 sin ID,True
+V12,Nombres de colaborador únicos (la liga por nombre es segura),OK,,True
+V13,Inversión y Activos tienen los mismos códigos,OK,,True
+V14,Costo coincide por código entre Inversión y Activos,OK,,True
+V15,Marca/Modelo/Tipo coinciden entre Inversión y Activos,OK,,True
+V16,Todos los niveles de la matriz son válidos,OK,,True
+V17,Costo asignado + costo de banca = costo mensual de la nómina activa,OK,"asignado 1,924,711 + banca 1,994,154 = 3,918,864 vs nómina 3,918,864",True
+V18,"Nómina activa coincide con la Etapa 2 ($3,918,864)",OK,"3,918,864",True
+V19,"Sueldos_Salarios coincide con Colaboradores (neto, integrado, nómina, puesto)",OK,,True
+V20,IDs de colaborador únicos,OK,,True
+V21,Sin marcador 1990-01-01 en fechas,OK,,True
+V22,Sin texto PENDIENTE en puesto/roles,OK,,True
+V23,Marcas de equipo = 5,OK,"['ACER', 'ASUS', 'DELL', 'HP', 'LENOVO']",True
+V24,Esquemas de nómina sin solapamientos,OK,,True
+V25,Activos sin costo conocido no suman como 0,OK,,True

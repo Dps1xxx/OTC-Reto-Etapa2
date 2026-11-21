@@ -1,0 +1,177 @@
+﻿tabla,columna,tipo,descripcion,origen_o_formula,nulos,pct_nulos,valores_unicos,ejemplo
+colaboradores_acondicionada,id_colaborador,texto,Identificador único del colaborador; llave en todo el modelo (R01).,Catalogo_Colaboradores.ID,0,0.0,107,OTC003
+colaboradores_acondicionada,nombre_completo,texto,Nombre en mayúsculas y sin espacios sobrantes.,Nombre Completo (M01),0,0.0,107,ABRAHAM PEREZ GIL
+colaboradores_acondicionada,estatus_origen,texto,Estatus tal como viene en la fuente.,Estatus (M01),0,0.0,2,ACTIVO
+colaboradores_acondicionada,estatus_corte,texto,"Estatus al 17-nov-2026: ACTIVO, ACTIVO (BAJA PROGRAMADA) o BAJA (R02).",Derivado de Estatus y Fecha de Baja contra la fecha de corte,0,0.0,3,ACTIVO
+colaboradores_acondicionada,es_activo,booleano,Verdadero si la persona cuenta como activa al corte.,"estatus_corte en {ACTIVO, ACTIVO (BAJA PROGRAMADA)}",0,0.0,2,True
+colaboradores_acondicionada,baja_programada,booleano,Activo con fecha de baja posterior al corte.,Estatus = Activo y fecha_baja > 2026-11-17,0,0.0,2,False
+colaboradores_acondicionada,fecha_incorporacion,fecha,Fecha de ingreso a OTC.,Fecha Incorporación convertida a fecha,1,0.9,85,2016-06-12
+colaboradores_acondicionada,fecha_baja,fecha,Fecha de baja (sólo si existe).,Fecha de Baja convertida a fecha,92,86.0,9,2026-10-23
+colaboradores_acondicionada,baja_sin_fecha,booleano,Persona en baja sin fecha de baja registrada; no se imputa.,estatus_corte = BAJA y fecha_baja nula,0,0.0,2,False
+colaboradores_acondicionada,fecha_incorporacion_faltante,booleano,Persona sin fecha de incorporación.,fecha_incorporacion nula,0,0.0,2,False
+colaboradores_acondicionada,antiguedad_anios,decimal,Años de antigüedad; nulo si es baja sin fecha.,(fecha_baja o fecha de corte − fecha_incorporacion) / 365.25,19,17.8,56,10.4
+colaboradores_acondicionada,anio_mes_baja,texto,Mes de la baja en formato AAAA-MM; sirve para P9.,fecha_baja,92,86.0,3,2026-10
+colaboradores_acondicionada,ubicacion,texto,Ciudad o entidad estandarizada.,Ciudad + tabla de equivalencias (M03),0,0.0,23,MONTERREY
+colaboradores_acondicionada,estado,texto,Entidad federativa de la ubicación (nulo si no aplica).,Tabla de equivalencias (M03),2,1.9,17,NUEVO LEÓN
+colaboradores_acondicionada,pais,texto,País de la ubicación (nulo si no se conoce).,Tabla de equivalencias (M03),1,0.9,2,MÉXICO
+colaboradores_acondicionada,puesto,texto,Puesto del catálogo de roles; nulo si estaba PENDIENTE.,"Puesto (M01, M02) o Asignaciones.Rol Asignado (M04)",46,43.0,23,CONSULTOR FUNCIONAL ORACLE CLOUD SENIOR
+colaboradores_acondicionada,puesto_fuente,texto,Dónde se obtuvo el puesto: CATÁLOGO o ASIGNACIÓN (rol asignado).,Derivado,46,43.0,2,CATÁLOGO
+colaboradores_acondicionada,puesto_faltante,booleano,Persona sin puesto conocido.,puesto nulo,0,0.0,2,True
+colaboradores_acondicionada,nivel_puesto,texto,"Nivel del puesto (Analista, Junior, Senior, Gerente, Director, Practicante).",Catalogo_Roles.Nivel por puesto,46,43.0,4,Senior
+colaboradores_acondicionada,familia_puesto,texto,"Agrupación del puesto: CONSULTORÍA, ADMINISTRATIVO, GESTIÓN DE PROYECTOS, COMERCIAL, DIRECCIÓN, OTRO o SIN CLASIFICAR.",Regla sobre el texto del puesto,0,0.0,6,SIN CLASIFICAR
+colaboradores_acondicionada,departamento,texto,Departamento del colaborador.,Departamento original o derivado del catálogo de roles (M04),48,44.9,4,OPERACIONES Y SOPORTE
+colaboradores_acondicionada,departamento_codigo,texto,Código del departamento (D000x).,Catalogo_Departamentos.codigo,48,44.9,4,D0004
+colaboradores_acondicionada,departamento_fuente,texto,CATÁLOGO o CATÁLOGO DE ROLES.,Derivado,48,44.9,2,CATÁLOGO
+colaboradores_acondicionada,es_familiar_colaborador,booleano,Registro con el puesto FAMILIAR COLABORADOR (no es plantilla productiva).,puesto = 'FAMILIAR COLABORADOR',0,0.0,2,False
+colaboradores_acondicionada,tipo_nomina_original,texto,Clave de nómina como viene en la fuente (normalizada).,Tipo Nómina (M01),6,5.6,9,XERES OT-SINDICATO
+colaboradores_acondicionada,esquema_nomina,texto,"Esquema de nómina sin solapamientos; SMR, OTC-SINDICATO (SMR) y MODALIDAD 40-SMR quedan como SMR.",Tabla de equivalencias (M03),0,0.0,8,SINDICATO XERES
+colaboradores_acondicionada,sueldo_neto_imss,decimal,Sueldo neto por IMSS (MXN/mes).,Sueldo Neto IMSS,0,0.0,33,9198.2
+colaboradores_acondicionada,sueldo_asimilados_sindicato,decimal,Sueldo por asimilados o sindicato (MXN/mes).,Sueldo Asimilados/Sindicato,0,0.0,61,47301.8
+colaboradores_acondicionada,sueldo_complementos,decimal,Complementos de sueldo (MXN/mes).,Sueldo Complementos,0,0.0,11,0.0
+colaboradores_acondicionada,sueldo_neto_total,decimal,Neto total (MXN/mes).,neto IMSS + asimilados + complementos (validado),0,0.0,66,56500.0
+colaboradores_acondicionada,comision_nomina,decimal,Comisión de nómina (MXN/mes).,Comisión Nómina,0,0.0,52,0.0
+colaboradores_acondicionada,impuestos_imss,decimal,Impuestos IMSS a cargo de OTC (MXN/mes).,Impuestos IMSS,0,0.0,35,3230.7
+colaboradores_acondicionada,sueldo_total_integrado,decimal,Costo total mensual registrado en la fuente; histórico para bajas.,neto total + comisión + impuestos IMSS (validado),0,0.0,75,59730.7
+colaboradores_acondicionada,sueldo_faltante,booleano,"Activo con sueldo en 0, tratado como dato faltante (R03).",es_activo y sueldo_total_integrado <= 0,0,0.0,2,False
+colaboradores_acondicionada,costo_mensual,decimal,Costo mensual vigente: sueldo integrado si es activo con sueldo; 0 para bajas; nulo si falta el sueldo.,R03,5,4.7,67,59730.7
+colaboradores_acondicionada,costo_hora,decimal,Costo por hora (MXN/h); nulo si no hay costo.,costo_mensual / 160 (R10),37,34.6,66,373.32
+colaboradores_acondicionada,sgmm_aseguradora,texto,Aseguradora de gastos médicos; POR CONFIRMAR si sólo se sabe que hay plan.,SGMM (M03),20,18.7,3,SEGUROS ATLAS
+colaboradores_acondicionada,sgmm_estatus,texto,"CON COBERTURA, SIN COBERTURA o PENDIENTE.",SGMM (M03),0,0.0,3,CON COBERTURA
+colaboradores_acondicionada,seguro_vida,texto,Cuenta con seguro de vida (SI/NO).,Seguro Vida,6,5.6,2,SI
+colaboradores_acondicionada,contrato_estatus,texto,"PLANTA, POR PROYECTO o PENDIENTE.",Doc: Contrato,0,0.0,3,PLANTA
+colaboradores_acondicionada,doc_acta,texto,Acta de nacimiento en el expediente (SI/PENDIENTE).,Doc: Acta,0,0.0,2,SI
+colaboradores_acondicionada,doc_ine,texto,INE en el expediente.,Doc: INE,0,0.0,2,SI
+colaboradores_acondicionada,doc_curp,texto,CURP en el expediente.,Doc: CURP,0,0.0,2,SI
+colaboradores_acondicionada,doc_const_fiscal,texto,Constancia de situación fiscal.,Doc: Const. Situación Fiscal,0,0.0,2,SI
+colaboradores_acondicionada,doc_nss,texto,Documento de NSS.,Doc: NSS,0,0.0,2,SI
+colaboradores_acondicionada,doc_comprobante_domicilio,texto,Comprobante de domicilio.,Doc: Comprobante Domicilio,0,0.0,2,SI
+colaboradores_acondicionada,doc_banco,texto,Documento bancario.,Doc: Banco,0,0.0,2,SI
+colaboradores_acondicionada,doc_foto,texto,Fotografía en el expediente.,Doc: Foto,0,0.0,2,PENDIENTE
+colaboradores_acondicionada,formato_rh,texto,Formato de RH entregado.,Formato: RH,0,0.0,2,SI
+colaboradores_acondicionada,docs_basicos_ok,entero,"Documentos básicos completos, de 7 (acta, INE, CURP, constancia fiscal, NSS, comprobante de domicilio, banco).",suma de documentos básicos = SI,0,0.0,8,7
+colaboradores_acondicionada,docs_basicos_pendientes,entero,Documentos básicos que faltan.,7 − docs_basicos_ok,0,0.0,8,0
+colaboradores_acondicionada,expediente_completo,booleano,Expediente básico completo.,docs_basicos_ok = 7,0,0.0,2,True
+colaboradores_acondicionada,n_asignaciones,entero,Número de asignaciones En Curso de la persona.,Conteo en Asignaciones por id_colaborador,0,0.0,3,0
+colaboradores_acondicionada,tiene_asignacion,booleano,Tiene al menos una asignación En Curso registrada.,n_asignaciones > 0,0,0.0,2,False
+colaboradores_acondicionada,asignacion_vigente,booleano,Tiene al menos una asignación En Curso no vencida (con fechas efectivas R08).,Asignaciones.estado_vigencia distinto de VENCIDA,0,0.0,2,False
+colaboradores_acondicionada,en_banca,booleano,Activo sin ninguna asignación registrada (base de P1 y P6).,es_activo y no tiene_asignacion,0,0.0,2,True
+colaboradores_acondicionada,en_banca_ajustada,booleano,"Igual que en_banca, pero cuenta como banca a quien sólo tiene asignaciones vencidas.",es_activo y no asignacion_vigente,0,0.0,2,True
+colaboradores_acondicionada,tipo_banca,texto,"BANCA CONSULTORÍA, BANCA NO CONSULTIVA o BANCA SIN CLASIFICAR (sin puesto); NO APLICA si no está en banca.",en_banca y familia_puesto,0,0.0,4,BANCA SIN CLASIFICAR (SIN PUESTO)
+colaboradores_acondicionada,costo_mensual_banca,decimal,Costo mensual de la persona si está en banca; 0 si no.,costo_mensual si en_banca,5,4.7,40,59730.7
+colaboradores_acondicionada,costo_mensual_asignado_total,decimal,Costo mensual de la persona cargado a proyectos.,suma de costo_mensual_asignado en Asignaciones,32,29.9,28,0.0
+colaboradores_acondicionada,n_equipos,entero,Equipos de cómputo vigentes a su nombre.,Conteo en Activos con equipo_vigente,0,0.0,4,1
+colaboradores_acondicionada,tiene_equipo,booleano,Tiene al menos un equipo vigente.,n_equipos > 0,0,0.0,2,True
+colaboradores_acondicionada,en_matriz,booleano,Aparece en la matriz de habilidades.,ID presente en Matriz_Habilidades,0,0.0,2,True
+colaboradores_acondicionada,n_habs_evaluadas,entero,Habilidades con nivel registrado.,Conteo en habilidades_colaborador,0,0.0,33,51
+colaboradores_acondicionada,nivel_prom_habs,decimal,Nivel promedio de sus habilidades (1 a 4).,promedio de nivel_num,53,49.5,44,1.8
+colaboradores_acondicionada,n_habs_nivel3plus,entero,Habilidades en nivel Avanzado o Experto.,conteo de nivel_num >= 3,0,0.0,20,12
+colaboradores_acondicionada,matriz_confiable,booleano,Tiene 4 o más habilidades evaluadas (criterio de la Etapa 2).,n_habs_evaluadas >= 4,0,0.0,2,True
+colaboradores_acondicionada,top_habilidades,texto,"Hasta 5 habilidades de mayor nivel, con su nivel numérico.",Derivado de habilidades_colaborador,53,49.5,54,ORACLE EBS - !SUP (4); ORACLE EBS - ORAC
+asignaciones_acondicionada,id_asignacion,texto,Identificador de la asignación.,Consecutivo A001...,0,0.0,31,A001
+asignaciones_acondicionada,id_colaborador,texto,Llave del colaborador (R01).,Asignaciones.ID Colaborador,0,0.0,30,OTC004
+asignaciones_acondicionada,nombre_colaborador,texto,Nombre del colaborador.,Nombre Colaborador (M01),0,0.0,30,ADRIANA PEREZ NAVARRETE
+asignaciones_acondicionada,id_proyecto,texto,Llave del proyecto: código de cliente + consecutivo.,Catalogo_Clientes (M08),0,0.0,4,C0001-P03
+asignaciones_acondicionada,cliente,texto,Cliente normalizado.,"Cliente (M01, M03)",0,0.0,3,METALSA
+asignaciones_acondicionada,proyecto,texto,Proyecto normalizado y corregido.,"Proyecto (M01, M03)",0,0.0,4,ASIGNACIÓN INDEFINIDA
+asignaciones_acondicionada,proyecto_comodin,booleano,"El proyecto es ""ASIGNACIÓN INDEFINIDA"" (no es un proyecto real).",proyecto = 'ASIGNACIÓN INDEFINIDA',0,0.0,2,True
+asignaciones_acondicionada,tipo_asignacion,texto,PROYECTO o ASIGNACIÓN.,Tipo de Asignación,0,0.0,2,ASIGNACIÓN
+asignaciones_acondicionada,estatus_asignacion,texto,Estatus de la asignación.,Estatus Asignación,0,0.0,1,EN CURSO
+asignaciones_acondicionada,rol_interno,texto,Rol interno del colaborador; nulo si estaba PENDIENTE.,Nómina/Rol Interno (M02),14,45.2,10,CONSULTOR FUNCIONAL ORACLE CLOUD SENIOR
+asignaciones_acondicionada,rol_asignado,texto,Rol que cubre en el proyecto; nulo si estaba PENDIENTE.,Rol Asignado (M02),29,93.5,1,CONSULTOR FUNCIONAL ORACLE EBS SENIOR
+asignaciones_acondicionada,rol_efectivo,texto,"Rol para costear: rol asignado, si no el interno, si no el puesto del catálogo.","coalesce(rol_asignado, rol_interno, puesto)",12,38.7,10,CONSULTOR FUNCIONAL ORACLE CLOUD SENIOR
+asignaciones_acondicionada,fuente_rol,texto,De dónde sale rol_efectivo.,Derivado,0,0.0,3,ROL INTERNO
+asignaciones_acondicionada,rol_faltante,booleano,No hay ningún rol conocido.,rol_efectivo nulo,0,0.0,2,False
+asignaciones_acondicionada,familia_puesto,texto,Familia de puesto de la persona.,colaboradores_acondicionada,0,0.0,3,CONSULTORÍA
+asignaciones_acondicionada,esquema_nomina,texto,Esquema de nómina de la persona.,colaboradores_acondicionada,0,0.0,4,SINDICATO XERES
+asignaciones_acondicionada,fecha_inicio_registrada,fecha,Fecha de inicio registrada; nulo si era 1990-01-01.,"Fecha Inicio (M02, R07)",21,67.7,3,2025-11-03
+asignaciones_acondicionada,fecha_fin_registrada,fecha,"Fecha de fin registrada; nulo si era ""Indefinido"".","Fecha Fin (M02, R07)",24,77.4,3,2027-01-01
+asignaciones_acondicionada,fecha_inicio_desconocida,booleano,El origen traía 1990-01-01.,Fecha Inicio = '1990-01-01',0,0.0,2,True
+asignaciones_acondicionada,fin_indefinido,booleano,"El origen traía ""Indefinido"".",Fecha Fin = 'Indefinido',0,0.0,2,True
+asignaciones_acondicionada,fecha_inicio_efectiva,fecha,"Fecha de inicio para análisis, dentro del rango del proyecto (R08).",registrada o del proyecto,21,67.7,3,2025-11-03
+asignaciones_acondicionada,fuente_fecha_inicio,texto,"ASIGNACIÓN, PROYECTO (completa nulo), PROYECTO (ajustada R08) o DESCONOCIDA.",Derivado,0,0.0,3,DESCONOCIDA
+asignaciones_acondicionada,fecha_fin_efectiva,fecha,"Fecha de fin para análisis, dentro del rango del proyecto (R08).",registrada o del proyecto,23,74.2,4,2026-09-23
+asignaciones_acondicionada,fuente_fecha_fin,texto,"ASIGNACIÓN, PROYECTO (completa nulo), PROYECTO (ajustada R08) o INDEFINIDA O DESCONOCIDA.",Derivado,0,0.0,4,INDEFINIDA O DESCONOCIDA
+asignaciones_acondicionada,ajustada_r08,booleano,Se recortó al rango del proyecto.,fuente de inicio o fin contiene R08,0,0.0,2,False
+asignaciones_acondicionada,duracion_dias,decimal,Duración de la asignación en días.,fecha_fin_efectiva − fecha_inicio_efectiva,23,74.2,4,70.0
+asignaciones_acondicionada,dias_para_fin,decimal,Días entre el corte y el fin; negativo si ya venció.,fecha_fin_efectiva − 2026-11-17,23,74.2,4,-55.0
+asignaciones_acondicionada,estado_vigencia,texto,"VENCIDA, 0-30, 31-60, 61-90, MÁS DE 90 DÍAS o INDEFINIDA / SIN FECHA FIN.",Rangos de dias_para_fin,0,0.0,3,INDEFINIDA / SIN FECHA FIN
+asignaciones_acondicionada,persona_libre_al_vencer,texto,Al terminar esta asignación la persona no tiene otra (P2); nulo si no hay fecha fin.,No existe otra asignación En Curso sin fin o con fin posterior,23,74.2,2,True
+asignaciones_acondicionada,n_asignaciones_persona,entero,Asignaciones En Curso de la persona.,Conteo por id_colaborador,0,0.0,2,1
+asignaciones_acondicionada,pct_dedicacion,decimal,Dedicación estimada (R06).,1 / n_asignaciones_persona,0,0.0,2,1.0
+asignaciones_acondicionada,costo_mensual_persona,decimal,Costo mensual vigente de la persona.,colaboradores_acondicionada.costo_mensual,0,0.0,27,59397.28
+asignaciones_acondicionada,costo_mensual_asignado,decimal,Costo mensual cargado a esta asignación.,costo_mensual_persona × pct_dedicacion,0,0.0,27,59397.28
+asignaciones_acondicionada,costo_hora_persona,decimal,Costo por hora de la persona.,colaboradores_acondicionada.costo_hora,0,0.0,27,371.23
+proyectos_acondicionada,id_proyecto,texto,Llave del proyecto.,"cod_cliente + ""-P"" + consecutivo por cliente",0,0.0,12,C0001-P01
+proyectos_acondicionada,cod_cliente,texto,Código del cliente.,Cód Cliente,0,0.0,8,C0001
+proyectos_acondicionada,cliente,texto,Cliente normalizado.,"Cliente (M01, M03)",0,0.0,8,METALSA
+proyectos_acondicionada,industria,texto,Industria normalizada.,Industria (M01),0,0.0,4,AUTOMOTRIZ
+proyectos_acondicionada,proyecto,texto,Proyecto normalizado y corregido.,"Proyecto (M01, M03)",0,0.0,12,AMS MANUFACTURA
+proyectos_acondicionada,estatus_proyecto,texto,EN CURSO o POR INICIAR.,Estatus Proyecto,0,0.0,2,EN CURSO
+proyectos_acondicionada,fecha_inicio,fecha,Fecha de inicio oficial (R08).,Fecha Inicio,6,50.0,6,2026-07-15
+proyectos_acondicionada,fecha_fin,fecha,Fecha de fin oficial (R08).,Fecha Fin,9,75.0,3,2026-09-23
+proyectos_acondicionada,sin_fecha_inicio,booleano,No tiene fecha de inicio.,fecha_inicio nula,0,0.0,2,True
+proyectos_acondicionada,sin_fecha_fin,booleano,No tiene fecha de fin.,fecha_fin nula,0,0.0,2,True
+proyectos_acondicionada,pm_otc,texto,"PM de OTC, en mayúsculas.",PM OTC (M01),6,50.0,2,JUAN JOSÉ CORONADO BRAVO
+proyectos_acondicionada,pm_sin_asignar,booleano,El proyecto no tiene PM de OTC.,pm_otc nulo,0,0.0,2,True
+proyectos_acondicionada,pm_es_colaborador,texto,"El PM existe como colaborador (R05), por nombre sin acentos; nulo si no hay PM.",Comparación contra colaboradores,6,50.0,1,False
+proyectos_acondicionada,proyecto_comodin,booleano,"Proyecto ""ASIGNACIÓN INDEFINIDA"".",proyecto = 'ASIGNACIÓN INDEFINIDA',0,0.0,2,False
+proyectos_acondicionada,estatus_inconsistente,booleano,Estatus POR INICIAR pero con personal En Curso.,estatus_proyecto y n_personas_asignadas,0,0.0,2,False
+proyectos_acondicionada,n_personas_asignadas,entero,Personas distintas con asignación En Curso.,Conteo en asignaciones_acondicionada,0,0.0,4,0
+proyectos_acondicionada,sin_personal,booleano,Proyecto sin ninguna persona asignada.,n_personas_asignadas = 0,0,0.0,2,True
+proyectos_acondicionada,vencido,booleano,EN CURSO con fecha fin anterior al corte.,estatus = EN CURSO y fecha_fin < 2026-11-17,0,0.0,2,False
+proyectos_acondicionada,dias_para_fin,decimal,Días entre el corte y el fin del proyecto.,fecha_fin − 2026-11-17,9,75.0,3,-55.0
+proyectos_acondicionada,costo_mensual_proyecto,decimal,Costo mensual de la plantilla asignada (MXN).,suma de costo_mensual_asignado,0,0.0,5,0.0
+proyectos_acondicionada,personas_sin_costo,entero,Personas asignadas sin sueldo registrado.,Conteo con costo_mensual_asignado nulo,0,0.0,1,0
+proyectos_acondicionada,costo_hora_promedio,decimal,Costo por hora promedio de las personas asignadas.,promedio de costo_hora_persona,8,66.7,4,398.17
+activos_acondicionada,cod_activo,texto,Código del equipo.,Cód Activo,0,0.0,123,A0001
+activos_acondicionada,descripcion,texto,COMPUTADORA o MONITOR.,Descripción (M01),0,0.0,2,COMPUTADORA
+activos_acondicionada,tipo,texto,LAPTOP o MONITOR.,Tipo (M01),0,0.0,2,LAPTOP
+activos_acondicionada,marca,texto,Marca estandarizada (5 valores).,"Marca (M01, M03)",0,0.0,5,LENOVO
+activos_acondicionada,modelo,texto,Modelo normalizado.,Modelo (M01),1,0.8,73,V14 G2 ALC
+activos_acondicionada,serie,texto,Número de serie; nulo si era PENDIENTE.,"Serie (M01, M02)",1,0.8,122,PF3WHKFD
+activos_acondicionada,modelo_faltante,booleano,Sin modelo.,modelo nulo,0,0.0,2,False
+activos_acondicionada,serie_faltante,booleano,Serie PENDIENTE en el origen.,Serie = 'PENDIENTE',0,0.0,2,False
+activos_acondicionada,costo_origen,decimal,Costo tal como viene (0 = desconocido).,Costo,0,0.0,31,7999.0
+activos_acondicionada,costo_equipo,decimal,Costo conocido en MXN; nulo si era 0.,Costo > 0 (R03),70,56.9,30,7999.0
+activos_acondicionada,costo_desconocido,booleano,El costo no está registrado.,Costo = 0,0,0.0,2,False
+activos_acondicionada,id_responsable,texto,"ID del colaborador responsable (R01, R09).",Nombre → ID (M08),32,26.0,73,OTC003
+activos_acondicionada,sin_responsable,booleano,El equipo no tiene responsable.,Colaborador Asignado = 'Sin Asignar',0,0.0,2,False
+activos_acondicionada,estatus_responsable,texto,"ACTIVO, BAJA o SIN RESPONSABLE.",colaboradores_acondicionada.estatus_corte,0,0.0,3,ACTIVO
+activos_acondicionada,fecha_inicio_asignacion,fecha,Inicio de la asignación del equipo; nulo si era 1990-01-01 o vacío.,Fecha Inicio (M02),67,54.5,47,2024-06-06
+activos_acondicionada,inicio_desconocido,booleano,Fecha de inicio desconocida.,Fecha Inicio = '1990-01-01' o vacía,0,0.0,2,True
+activos_acondicionada,fecha_fin_asignacion,fecha,Fin de la asignación o devolución; nulo si vigente.,Fecha Fin (M02),113,91.9,9,2026-10-27
+activos_acondicionada,equipo_vigente,booleano,La asignación sigue vigente.,Fecha Fin = 'Activo',0,0.0,2,True
+activos_acondicionada,situacion_equipo,texto,"EN USO, POR RECUPERAR, DEVUELTO / CERRADO o DISPONIBLE.","Derivado de responsable, estatus y fecha fin",0,0.0,4,EN USO
+activos_acondicionada,equipo_a_nombre_de_baja,booleano,El responsable está en baja (esté o no devuelto).,estatus_responsable = BAJA,0,0.0,2,False
+activos_acondicionada,equipo_por_recuperar,booleano,A nombre de una baja y todavía vigente (P11).,situacion_equipo = 'POR RECUPERAR',0,0.0,2,False
+activos_acondicionada,valor_por_recuperar,decimal,Costo conocido de los equipos por recuperar.,costo_equipo si equipo_por_recuperar,119,96.7,4,12189.0
+habilidades_colaborador,id_colaborador,texto,Llave del colaborador.,Matriz_Habilidades.ID Colaborador,0,0.0,54,OTC003
+habilidades_colaborador,codigo_habilidad,texto,Código de habilidad (H000x / S000x).,Encabezado de la matriz,0,0.0,69,H0002
+habilidades_colaborador,habilidad,texto,Tecnología y habilidad (evita confundir AP o AR de eBS con las de Cloud).,Catalogo_Habilidades,0,0.0,69,ORACLE EBS - GL
+habilidades_colaborador,tecnologia,texto,Tecnología o grupo.,Catalogo_Habilidades.tecnologia,0,0.0,5,ORACLE EBS
+habilidades_colaborador,tipo_habilidad,texto,HARD o SOFT.,Catalogo_Habilidades.tipo,0,0.0,2,HARD
+habilidades_colaborador,nivel,texto,"BÁSICO, INTERMEDIO, AVANZADO o EXPERTO.",Celda de la matriz,0,0.0,4,INTERMEDIO
+habilidades_colaborador,nivel_num,entero,"Nivel numérico: Básico 1, Intermedio 2, Avanzado 3, Experto 4.",Tabla de equivalencia,0,0.0,4,2
+habilidades_colaborador,es_activo,booleano,El colaborador está activo al corte.,colaboradores_acondicionada.es_activo,0,0.0,2,True
+habilidades_colaborador,nivel_3_mas,booleano,Nivel Avanzado o Experto.,nivel_num >= 3,0,0.0,2,False
+habilidades_cobertura,codigo_habilidad,texto,Código de habilidad.,Catalogo_Habilidades.codigo,0,0.0,71,H0002
+habilidades_cobertura,habilidad,texto,Tecnología y habilidad.,Catalogo_Habilidades,0,0.0,71,ORACLE EBS - GL
+habilidades_cobertura,tecnologia,texto,Tecnología o grupo.,Catalogo_Habilidades,0,0.0,6,ORACLE EBS
+habilidades_cobertura,tipo_habilidad,texto,HARD o SOFT.,Catalogo_Habilidades,0,0.0,2,HARD
+habilidades_cobertura,n_evaluados_activos,entero,Activos con nivel registrado.,Conteo en habilidades_colaborador (es_activo),0,0.0,28,29
+habilidades_cobertura,n_nivel3plus_activos,entero,Activos en nivel Avanzado o Experto.,Conteo con nivel_num >= 3,0,0.0,19,9
+habilidades_cobertura,n_expertos_activos,entero,Activos en nivel Experto.,Conteo con nivel_num = 4,0,0.0,12,4
+habilidades_cobertura,nivel_prom_activos,decimal,Nivel promedio entre activos evaluados.,promedio de nivel_num,2,2.8,50,2.03
+habilidades_cobertura,n_nivel3plus_incl_bajas,entero,Lo mismo que n_nivel3plus_activos pero contando bajas (criterio de la Etapa 2).,Conteo sin filtrar es_activo,0,0.0,20,10
+habilidades_cobertura,sin_evaluaciones,booleano,Ningún activo tiene nivel registrado.,n_evaluados_activos = 0,0,0.0,2,False
+habilidades_cobertura,cobertura_baja,booleano,Menos de 2 activos con nivel Avanzado o Experto (indicador de P7).,n_nivel3plus_activos < 2,0,0.0,2,False
+roles,codigo_rol,texto,Código del rol.,Catalogo_Roles.Código,0,0.0,54,R0087
+roles,rol,texto,Nombre del rol.,Nombre del Rol (M01); se excluye el rol PENDIENTE,0,0.0,54,DIRECTOR GENERAL
+roles,nivel,texto,Nivel del rol.,Nivel,0,0.0,6,Director
+roles,departamento,texto,Departamento del rol.,Departamento (M01),1,1.9,5,DIRECCIÓN GENERAL
+roles,codigo_departamento,texto,Código del departamento.,Catalogo_Departamentos.codigo,1,1.9,5,D0005
+roles,familia_puesto,texto,Familia de puesto.,Regla sobre el texto del rol,0,0.0,6,DIRECCIÓN
+departamentos,codigo_departamento,texto,Código del departamento.,codigo,0,0.0,6,D0001
+departamentos,departamento,texto,Nombre del departamento.,nombre (M01),0,0.0,6,VENTAS
+departamentos,objetivo,texto,Objetivo del departamento.,objetivo,0,0.0,6,"Conseguir nuevos clientes, dar seguimien"
+departamentos,estatus,texto,Estatus.,estatus,0,0.0,1,ACTIVO
